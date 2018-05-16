@@ -5,11 +5,11 @@
  */
 package table.service;
 
-import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -20,7 +20,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import table.Rubrik;
+import table.Booking;
 import table.User;
 
 /**
@@ -42,8 +42,7 @@ public class UserFacadeREST extends AbstractFacade<User> {
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response createUser(User entity) {
         super.create(entity);
-        return Response.status(Response.Status.CREATED).entity(entity).build();
-        
+        return Response.status(Response.Status.CREATED).entity(entity).build();        
     }
 
     @PUT
@@ -93,6 +92,53 @@ public class UserFacadeREST extends AbstractFacade<User> {
     public String countREST() {
         return String.valueOf(super.count());
     }
+    @POST
+    @Path("login")
+    @Produces(MediaType.APPLICATION_XML)
+    public Response loginREST(String body) {
+        try {            
+            String[] split = body.split("<xml>");
+            String nama = split[0];
+            System.out.println("nama = " + nama);
+            String pass = split[1];
+            System.out.println("pass = " + pass);
+            Query createNativeQuery = 
+                getEntityManager()
+                        .createNativeQuery("SELECT * FROM `user` where username = '"
+                                + nama
+                                + "' and password = '"
+                                + pass
+                                + "'", User.class);
+            User singleResult = (User) createNativeQuery.getSingleResult();
+            if (singleResult.getLevel() == 1) {
+                
+            return Response
+                    .status(Response.Status.UNAUTHORIZED)
+                    .header("level", singleResult.getLevel())
+                    .header("userID", singleResult.getUserId())
+                    .header("nama", singleResult.getNama())
+                    .entity(singleResult)
+                    .build();        
+            }
+            else {
+            return Response
+                    .status(Response.Status.PAYMENT_REQUIRED)
+                    .header("level", singleResult.getLevel())
+                    .header("userID", singleResult.getUserId())
+                    .header("nama", singleResult.getNama())
+                    .entity(singleResult)
+                    .build();                    
+            } 
+        } catch (Exception e) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        
+//        Login login = new Login("user", "pass");        
+//        return l;
+    }
+    
+
+    
 
     @Override
     protected EntityManager getEntityManager() {

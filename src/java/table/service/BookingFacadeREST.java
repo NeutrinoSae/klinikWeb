@@ -130,6 +130,19 @@ public class BookingFacadeREST extends AbstractFacade<Booking> {
                                 , Booking.class);
         return createNativeQuery.getResultList();
     }
+    @GET
+    @Path("antrian")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Booking> getAntrianBooking() {
+        Query createNativeQuery = 
+                getEntityManager()
+                        .createNativeQuery("SELECT * FROM booking WHERE DATE(tanggal_booking) = DATE(curdate())"
+                                + "AND status = 0 ORDER BY booking.waktu_booking ASC"
+                                , Booking.class);
+        return createNativeQuery.getResultList();
+    }
+    
+    
 
     @GET
     @Path("{dd}/{mm}/{yyyy}")
