@@ -130,6 +130,22 @@ public class BookingFacadeREST extends AbstractFacade<Booking> {
                                 , Booking.class);
         return createNativeQuery.getResultList();
     }
+    
+    @GET
+    @Path("myBooking/today/{dd}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Booking> getMyBookingToday(@PathParam("dd") String dd) {
+        Query createNativeQuery = 
+                getEntityManager()
+                        .createNativeQuery("SELECT * FROM booking WHERE "
+                                + "DATE(tanggal_booking) = DATE(curdate()) AND"
+                                + " booking.id_user = "+dd
+                                + " ORDER BY booking.waktu_booking ASC"
+                                , Booking.class);
+        return createNativeQuery.getResultList();
+//                        .createNativeQuery("SELECT * FROM booking WHERE DATE(tanggal_booking) = DATE(curdate())"
+//                                + "ORDER BY booking.waktu_booking ASC"
+    }
     @GET
     @Path("antrian")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})

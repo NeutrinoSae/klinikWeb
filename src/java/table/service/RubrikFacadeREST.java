@@ -5,9 +5,15 @@
  */
 package table.service;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -58,6 +64,8 @@ public class RubrikFacadeREST extends AbstractFacade<Rubrik> {
             super.edit(entity);
             return Response.status(Response.Status.ACCEPTED).entity(entity).build();
     }
+    
+    
 
     @DELETE
     @Path("{id}")
@@ -109,6 +117,120 @@ public class RubrikFacadeREST extends AbstractFacade<Rubrik> {
         Rubrik get = findAll.get(0);
         return get.toString();
     }
+    @GET
+    @Path("jadwal")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String getJadwal() {
+        Properties prop = new Properties();
+	InputStream input = null;
+
+	try {
+
+		input = new FileInputStream("jadwal.properties");
+
+		// load a properties file
+		prop.load(input);
+
+		// get the property value and print it out
+		return (prop.getProperty("jadwal"));
+	} catch (IOException ex) {
+	} finally {
+		if (input != null) {
+			try {
+				input.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+        return "null";
+    }
+    @PUT
+    @Path("jadwal")
+    @Consumes(MediaType.TEXT_PLAIN)
+    public String setJadwal(String jadwal) {        
+        Properties prop = new Properties();
+	OutputStream output = null;
+
+	try {
+
+		output = new FileOutputStream("jadwal.properties");
+		// set the properties value
+		prop.setProperty("jadwal", jadwal);
+		// save properties to project root folder
+		prop.store(output, null);
+
+	} catch (IOException io) {
+		io.printStackTrace();
+	} finally {
+		if (output != null) {
+			try {
+				output.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+        return jadwal;
+    }
+    @GET
+    @Path("pengumuman")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String getPengumuman() {
+        Properties prop = new Properties();
+	InputStream input = null;
+
+	try {
+
+		input = new FileInputStream("pengumuman.properties");
+
+		// load a properties file
+		prop.load(input);
+
+		// get the property value and print it out
+		return (prop.getProperty("pengumuman"));
+	} catch (IOException ex) {
+	} finally {
+		if (input != null) {
+			try {
+				input.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+        return "null";
+    }
+    @PUT
+    @Path("pengumuman")
+    @Consumes(MediaType.TEXT_PLAIN)
+    public String setPengumuman(String body) {        
+        Properties prop = new Properties();
+	OutputStream output = null;
+
+	try {
+
+		output = new FileOutputStream("pengumuman.properties");
+		// set the properties value
+		prop.setProperty("pengumuman", body);
+		// save properties to project root folder
+		prop.store(output, null);
+
+	} catch (IOException io) {
+		io.printStackTrace();
+	} finally {
+		if (output != null) {
+			try {
+				output.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+        return body;
+    }
+    
+    
 
     @Override
     protected EntityManager getEntityManager() {

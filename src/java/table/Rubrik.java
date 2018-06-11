@@ -115,9 +115,20 @@ public class Rubrik implements Serializable {
 
     @Override
     public String toString() {
-        return "[" + rubrikId + "."
-                + info 
-                + " ]";
+        String[] split = info.split("::");
+        String temp = "Judul :" + split[0];
+        try {
+            temp+= "\nGejala :";
+            temp+= split[1];
+        } catch (Exception e) {
+        }
+        try {
+            temp+= "\nSolusi :";
+            temp+= split[1];
+        } catch (Exception e) {
+        }
+//        return info.replace("||", "\n");
+        return temp;
     }
     
 }
