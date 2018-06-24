@@ -123,8 +123,8 @@ public class Rubrik implements Serializable {
         } catch (Exception e) {
         }
         try {
-            temp+= "\nSolusi :";
-            temp+= split[1];
+            temp+= "\nPenaganan :";
+            temp+= split[2];
         } catch (Exception e) {
         }
 //        return info.replace("||", "\n");

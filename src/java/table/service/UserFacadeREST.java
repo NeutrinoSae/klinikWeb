@@ -110,31 +110,35 @@ public class UserFacadeREST extends AbstractFacade<User> {
                                 + pass
                                 + "'", User.class);
             User singleResult = (User) createNativeQuery.getSingleResult();
-            if (singleResult.getLevel() == 1) {
-                
-            return Response
-                    .status(Response.Status.UNAUTHORIZED)
-                    .header("level", singleResult.getLevel())
-                    .header("userID", singleResult.getUserId())
-                    .header("nama", singleResult.getNama())
-                    .entity(singleResult)
-                    .build();        
+            
+            if (singleResult.getLevel() == 2) {
+                return Response
+                        .status(403)
+                        .header("level", singleResult.getLevel())
+                        .header("userID", singleResult.getUserId())
+                        .header("nama", singleResult.getNama())
+                        .entity(singleResult)
+                        .build();                   
+            } else if (singleResult.getLevel() == 1) {
+                return Response
+                        .status(Response.Status.UNAUTHORIZED)
+                        .header("level", singleResult.getLevel())
+                        .header("userID", singleResult.getUserId())
+                        .header("nama", singleResult.getNama())
+                        .entity(singleResult)
+                        .build();                   
+            } else {
+                return Response
+                        .status(Response.Status.UNAUTHORIZED)
+                        .header("level", singleResult.getLevel())
+                        .header("userID", singleResult.getUserId())
+                        .header("nama", singleResult.getNama())
+                        .entity(singleResult)
+                        .build();   
             }
-            else {
-            return Response
-                    .status(Response.Status.PAYMENT_REQUIRED)
-                    .header("level", singleResult.getLevel())
-                    .header("userID", singleResult.getUserId())
-                    .header("nama", singleResult.getNama())
-                    .entity(singleResult)
-                    .build();                    
-            } 
         } catch (Exception e) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-        
-//        Login login = new Login("user", "pass");        
-//        return l;
     }
     
 
