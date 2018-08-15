@@ -63,11 +63,11 @@ public class Booking implements Serializable {
     @Basic(optional = false)
     @Column(name = "status")
     private int status = 0;
-    @Basic(optional = false)
-    @Lob
-    @Size(min = 1, max = 65535)
-    @Column(name = "token")
-    private String token;
+//    @Basic(optional = false)
+//    @Lob
+//    @Size(min = 1, max = 65535)
+////    @Column(name = "token")
+////    private String token;
 
     public Booking() {
     }
@@ -82,7 +82,7 @@ public class Booking implements Serializable {
         this.waktuBooking = waktuBooking;
         this.nama = nama;
         this.idUser = idUser;
-        this.token = token;
+//        this.token = token;
     }
 
     public Integer getIdBooking() {
@@ -133,13 +133,13 @@ public class Booking implements Serializable {
         this.idUser = idUser;
     }
 
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
+//    public String getToken() {
+//        return token;
+//    }
+//
+//    public void setToken(String token) {
+//        this.token = token;
+//    }
 
     @Override
     public int hashCode() {

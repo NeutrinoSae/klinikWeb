@@ -121,7 +121,7 @@ public class UserFacadeREST extends AbstractFacade<User> {
                         .build();                   
             } else if (singleResult.getLevel() == 1) {
                 return Response
-                        .status(Response.Status.UNAUTHORIZED)
+                        .status(402)
                         .header("level", singleResult.getLevel())
                         .header("userID", singleResult.getUserId())
                         .header("nama", singleResult.getNama())
@@ -129,7 +129,7 @@ public class UserFacadeREST extends AbstractFacade<User> {
                         .build();                   
             } else {
                 return Response
-                        .status(Response.Status.UNAUTHORIZED)
+                        .status(401)
                         .header("level", singleResult.getLevel())
                         .header("userID", singleResult.getUserId())
                         .header("nama", singleResult.getNama())

@@ -46,7 +46,7 @@ public class Rubrik implements Serializable {
     @NotNull
     @Lob
     @Size(min = 1, max = 65535)
-    @Column(name = "INFO")
+    @Column(name = "Judul")
     private String info;
     @Basic(optional = false)
     @NotNull

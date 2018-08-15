@@ -53,18 +53,18 @@ public class User implements Serializable {
     @Size(max = 65535)
     @Column(name = "Alamat")
     private String alamat;
-    @Column(name = "Gender")
+    @Column(name = "jenis_kelamin")
     private Integer gender;
     @Column(name = "Tanggal_Lahir")
     @Temporal(TemporalType.DATE)
     private Date tanggalLahir;
     @Lob
     @Size(max = 65535)
-    @Column(name = "HP")
+    @Column(name = "NO_HP")
     private String hp;
     @Lob
     @Size(max = 65535)
-    @Column(name = "KTP")
+    @Column(name = "NO_KARTU_BEROBAT")
     private String ktp;
     @Lob
     @Size(max = 65535)
@@ -74,7 +74,7 @@ public class User implements Serializable {
     @Size(max = 65535)
     @Column(name = "password")
     private String password;
-    @Column(name = "level")
+    @Column(name = "role")
     private Integer level;
 
     public User() {
